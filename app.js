@@ -35,13 +35,18 @@ function runExec(container) {
   });
 }
 
+var HostPort = 5030;
+
 docker1.createContainer({
-  Image: imagename
-//  Cmd: ['/bin/bash']
+  Image: cfg.imagename
 }, function(err, container) {
-  container.start({}, function(err, data) {
-  	console.log('Container started : ' + data);
-    runExec(container);
-  });
+	console.log("Host port : " + HostPort);
+	  container.start({
+	  	"ExposedPorts": {"3000/tcp": {}},
+		"PortBindings": {"3000/tcp": [{"HostPort": HostPort.toString()}]}
+	  }, function(err, data) {
+	  	console.log('Container started : ' + data);
+	    runExec(container);
+	  });
 });
 
