@@ -35,15 +35,17 @@ function runExec(container) {
   });
 }
 
-var HostPort = 5030;
+var HostPort = 5033; //use for testing
 
 docker1.createContainer({
-  Image: cfg.imagename
+  Image: cfg.imagename,
+  "Env": ["APP_NAME=" + cfg.appname, "HOST_PORT=" + HostPort]
 }, function(err, container) {
 	console.log("Host port : " + HostPort);
 	  container.start({
 	  	"ExposedPorts": {"3000/tcp": {}},
-		"PortBindings": {"3000/tcp": [{"HostPort": HostPort.toString()}]}
+	  	//uncomment if we want to provide host port instead of dynamically allocate
+		"PortBindings": {"3000/tcp":   [{}]}  //[{"HostPort": HostPort.toString()}]} //
 	  }, function(err, data) {
 	  	console.log('Container started : ' + data);
 	    runExec(container);
