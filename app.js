@@ -36,9 +36,11 @@ function launchContainer(){
 
 	var HostPort = 5033; //use for testing
 
+	var appname = getRandomArbitrary(10001, 50000);
+
 	docker1.createContainer({
 	  Image: cfg.imagename,
-	  "Env": ["APP_NAME=" + cfg.appname, "HOST_PORT=" + HostPort]
+	  "Env": ["APPNAME=dockerize_app" + appname.toString(), "HOST_PORT=" + HostPort]
 	}, function(err, container) {
 		console.log("Host port : " + HostPort);
 		  container.start({
@@ -47,12 +49,15 @@ function launchContainer(){
 			"PortBindings": {"3000/tcp":   [{}]}  //[{"HostPort": HostPort.toString()}]} //
 		  }, function(err, data) {
 		  	console.log('Container started : ' + data);
+//TODO: print out container number
 		   // runExec(container);
 		  });
 	});
 }
 
-
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
 /**
  * Get env list from running container
