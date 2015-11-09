@@ -1,6 +1,7 @@
 var Docker = require('dockerode');
 var fs = require('fs');
 var cfg = require('./config');
+var path = __dirname;
 
 var express = require('express');
 
@@ -9,7 +10,8 @@ var app = express();
 
 app.get ('/', function(req, res){
 
-	res.send('<H1>hello! would you like to launch some container?</H1>')
+	//res.send('<H1>hello! would you like to launch some container?</H1>')
+	res.sendFile(path + "/index.html");
 })
 
 app.post ('/launch', function(req,resp){
