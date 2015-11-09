@@ -16,7 +16,7 @@ app.get ('/', function(req, res){
 
 app.post ('/launch', function(req,resp){
 	launchContainer();
-	resp.send('All good');
+	//resp.send('All good');
 })
 
 var server = app.listen(3000, function(){
